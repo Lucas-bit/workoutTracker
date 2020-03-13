@@ -18,8 +18,11 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { use
 
 
 app.get("/", (_req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  }).catch (err => {
+    res.json(err);
   });
+
 
 app.post("/submit", ({body}, res) => {
   User.create(body)
