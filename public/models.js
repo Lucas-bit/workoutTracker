@@ -8,10 +8,33 @@ const userLogSchema = new Schema({
     default: Date.now
   },
 
-  exercise: {
+  exerciseType: {
     type: String, //not sure here
     required: true,
     trim: true,
+  },
+
+  weight: {
+    type: Number,
+    requried: true,
+    trim: true
+  },
+
+  sets: {
+    type: Number,
+    requried: true,
+    trim: true
+  },
+
+  reps: {
+    type: Number,
+    requried: true,
+    trim: true
+  },
+
+  duration: {
+    type: Number,
+    requried: true,
   }
 });
 
