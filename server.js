@@ -1,10 +1,12 @@
 const express = require("express");
 const logger = require("morgan");
+const mongojs = require('mongojs')
 const mongoose = require("mongoose");
+const path = require('path')
 
 const PORT = process.env.PORT || 3000;
 
-// const User = require("index.js");
+const userLog = require("./models/models");
 const app = express();
 
 app.use(logger("dev"));
@@ -19,20 +21,20 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { use
 
 app.get("/", (_req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
-  }).catch (err => {
-    res.json(err);
-  });
+  })
+
+  app.get("/exercise", (_req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'exercise.html'));
+  })
+
+  app.get('/stats', (_req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'stats.html'))
+  })
 
 
-app.post("/submit", ({body}, res) => {
-  User.create(body)
-    .then(dbUser => {
-      res.json(dbUser);
-    })
-    .catch(err => {
-      res.json(err);
-    });
-});
+  
+
+
 
 
 
