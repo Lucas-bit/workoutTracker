@@ -67,9 +67,43 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { use
         res.json(err);
       });
   });
+ 
+
+  app.get("/api/workouts/range", (_, res) => {
+    User.find()
+      .then(result => {
+        res.json(result);
+      })
+      .catch(err => {
+        res.json(err);
+      });
+  });
+
+  app.post("/api/workouts/range", (_, res) => {
+    User.create({})
+      .then(result => {
+        res.json(result);
+      })
+      .catch(err => {
+        res.json(err);
+      });
+  });
 
 
+  app.put("/api/workouts/range", ({data, params}, res) => {
+    User.findById(params.id, 
+      {$push:{exercises:data}}, 
+      {new:true, runValidators: true})
+      .then(result => {
+        res.json(result);
+      })
+      .catch(err => {
+        res.json(err);
+      });
+  });
 
+ 
+ 
 
 
 
