@@ -6,7 +6,7 @@ const path = require('path')
 
 const PORT = process.env.PORT || 3000;
 
-const User = require("./public/models");
+const User = require("./models/models");
 const app = express();
 
 app.use(logger("dev"));
@@ -31,16 +31,35 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { use
     res.sendFile(path.join(__dirname, 'public', 'stats.html'))
   })
 
-  // app.get('/api/workouts', (_req, res) => {
-  //   res.sendFile(path.join(__dirname, 'public', 'api.html'))
-  // })
 
   // app.get('/api/workouts/:id', (_req, res) => {
   //   res.json
   // })
 
-  app.get("/api/", (_, res) => {
+  app.get("/api/workouts", (_, res) => {
     User.find()
+      .then(result => {
+        res.json(result);
+      })
+      .catch(err => {
+        res.json(err);
+      });
+  });
+ 
+  app.post("/api/workouts", (_, res) => {
+    User.create({})
+      .then(result => {
+        res.json(result);
+      })
+      .catch(err => {
+        res.json(err);
+      });
+  });
+  
+  app.put("/api/workouts/:id", ({body, params}, res) => {
+    User.findById(params.id, 
+      {$push:{exercises:body}}, 
+      {new:true, runValidators: true})
       .then(result => {
         res.json(result);
       })

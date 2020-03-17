@@ -1,3 +1,4 @@
+
 const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
@@ -10,7 +11,6 @@ const userLogSchema = new Schema({
 
   exerciseType: {
     type: String, //not sure here
-    required: true,
     trim: true,
   },
 
