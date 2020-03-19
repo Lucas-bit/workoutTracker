@@ -18,9 +18,10 @@
   },
   "homepage": "https://github.com/Lucas-bit/workoutTracker#readme",
   "dependencies": {
+    "compression": "^1.7.4",
     "express": "^4.17.1",
     "mongojs": "^3.1.0",
-    "mongoose": "^5.9.4",
+    "mongoose": "^5.9.5",
     "morgan": "^1.9.1",
     "path": "^0.12.7"
   }

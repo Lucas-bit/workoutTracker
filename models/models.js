@@ -12,7 +12,7 @@ const userLogSchema = new Schema({
   },
   exercises: [
     {
-      exerciseType: {
+      type: {
         type: String,
         trim: true
       },
@@ -21,25 +21,35 @@ const userLogSchema = new Schema({
         trim: true
       },
       duration: {
-        type: Number,
-        required: true
+        type: Number
       },
       weight: {
-        type: Number,
-        required: true
+        type: Number  //removed required from weight, reps, sets, and duration
       },
       reps: {
-        type: Number,
-        required: true
+        type: Number
       },
       sets: {
-        type: Number,
-        required: true
+        type: Number
       }
     }
   ]
 },
+ {
+  toJSON: {
+    // include any virtual properties when data is requested
+    virtuals: true
+  }
+}
 );
+
+// adds a dynamically-created property to schema
+userLogSchema.virtual("totalDuration").get(function() {
+// "reduce" array of exercises down to just the sum of their durations
+return this.exercises.reduce((total, exercise) => {
+  return total + exercise.duration;
+}, 0);
+});
 
 // const userLogSchema = new Schema({
   
@@ -80,8 +90,8 @@ const userLogSchema = new Schema({
 //   exercises: [],
 // });
 
-const userLog = mongoose.model("User", userLogSchema);
+const Workout = mongoose.model("Workout", userLogSchema);
 
-module.exports = userLog;
+module.exports = Workout;
 
 

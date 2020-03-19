@@ -4,11 +4,12 @@ const mongojs = require('mongojs')
 const mongoose = require("mongoose");
 const path = require('path')
 
+
+
 const PORT = process.env.PORT || 3000;
 
 const User = require("./models/models");
 const app = express();
-
 app.use(logger("dev"));
 
 app.use(express.urlencoded({ extended: true }));
@@ -16,7 +17,19 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true });
+var MONGODB_URI = process.env.MONGODB_URL || "mongodb://localhost/workout";
+const options = {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+  family: 4 // Use IPv4, skip trying IPv6
+};
+mongoose.connect(MONGODB_URI,options)
+
+// mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true });
+
+
+// file routes
 
 
   app.get("/", (_req, res) => {
@@ -32,9 +45,8 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { use
   })
 
 
-  // app.get('/api/workouts/:id', (_req, res) => {
-  //   res.json
-  // })
+  // api/workouts
+  
 
   app.get("/api/workouts", (_, res) => {
     User.find()
@@ -57,7 +69,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { use
   });
   
   app.put("/api/workouts/:id", ({body, params}, res) => {
-    User.findById(params.id, 
+    User.findByIdAndUpdate(params.id, 
       {$push:{exercises:body}}, 
       {new:true, runValidators: true})
       .then(result => {
@@ -68,8 +80,10 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { use
       });
   });
  
+// api/workouts/range 
 
-  app.get("/api/workouts/range", (_, res) => {
+
+  app.get('/api/workouts/range', (_, res) => {
     User.find()
       .then(result => {
         res.json(result);
@@ -78,34 +92,7 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { use
         res.json(err);
       });
   });
-
-  app.post("/api/workouts/range", (_, res) => {
-    User.create({})
-      .then(result => {
-        res.json(result);
-      })
-      .catch(err => {
-        res.json(err);
-      });
-  });
-
-
-  app.put("/api/workouts/range", ({data, params}, res) => {
-    User.findById(params.id, 
-      {$push:{exercises:data}}, 
-      {new:true, runValidators: true})
-      .then(result => {
-        res.json(result);
-      })
-      .catch(err => {
-        res.json(err);
-      });
-  });
-
  
- 
-
-
 
 app.listen(PORT, () => {
   console.log(`App running on port ${PORT}!`);

@@ -11,7 +11,7 @@ const API = {
     return json[json.length - 1];
   },
   async addExercise(data) {
-    const id = location.search.split("=")[1]; //not finding this id in the code below
+    const id = location.search.split("=")[1]; //not finding this id in the code below // fixed?
 
     const res = await fetch("/api/workouts/" + id, {
       method: "PUT",
