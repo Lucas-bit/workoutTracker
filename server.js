@@ -17,16 +17,16 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-var MONGODB_URI = process.env.MONGODB_URL || "mongodb://localhost/workout";
-const options = {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
-  family: 4 // Use IPv4, skip trying IPv6
-};
-mongoose.connect(MONGODB_URI,options)
+// var MONGODB_URI = process.env.MONGODB_URL || "mongodb://localhost/workout";
+// const options = {
+//   useNewUrlParser: true,
+//   useCreateIndex: true,
+//   useFindAndModify: false,
+//   family: 4 // Use IPv4, skip trying IPv6
+// };
+// mongoose.connect(MONGODB_URI,options)
 
-// mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workout", { useNewUrlParser: true });
 
 
 // file routes
