@@ -51,45 +51,6 @@ return this.exercises.reduce((total, exercise) => {
 }, 0);
 });
 
-// const userLogSchema = new Schema({
-  
-
-//   day: {
-//     type: Date,
-//     default: Date.now
-//   },
-
-//   exerciseType: {
-//     type: String, //not sure here
-//     trim: true,
-//   },
-
-//   weight: {
-//     type: Number,
-//     requried: true,
-//     trim: true
-//   },
-
-//   sets: {
-//     type: Number,
-//     requried: true,
-//     trim: true
-//   },
-
-//   reps: {
-//     type: Number,
-//     requried: true,
-//     trim: true
-//   },
-
-//   duration: {
-//     type: Number,
-//     requried: true,
-//   },
-
-//   exercises: [],
-// });
-
 const Workout = mongoose.model("Workout", userLogSchema);
 
 module.exports = Workout;
